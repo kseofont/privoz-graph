@@ -94,15 +94,19 @@ function App() {
               <h2>Privoz Bazar</h2>
               <div className="game-phase mb-2 border border-green px-3 py-2">
                 <h3>Game info</h3>
-                <p>current player id = {currentPlayer}</p>
-                <p>active user id = {activeUserId}</p>
+                <div className="game-info d-flex gap-2">
+
+                  <p>current player id = {currentPlayer}</p>
+                  <p>active user id = {activeUserId}</p>
+                </div>
                 <div>
                   <h4>players:</h4>
-                  <div className='d-flex gap-2'>
+                  <div className='d-flex gap-2 p-2 '>
                     {players.map(player => (
-                      <div key={player.id} className='border p-2' style={{ backgroundColor: player.hero.color }}>
-                        <i className='bi bi-person'></i> {/* Bootstrap's person icon */}
-                        ID: {player.id}, Name: {player.hero.name}
+                      <div key={player.id} className='border p-2 '>
+                        <i className='bi bi-person d-flex justify-content-center align-items-center' style={{ color: player.hero.color }}></i>
+
+                        ID: {player.id},  {player.hero.name}
                       </div>
                     ))}
                   </div>
