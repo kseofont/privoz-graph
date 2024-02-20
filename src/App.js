@@ -97,18 +97,28 @@ function App() {
                 <div className="game-info d-flex gap-2">
 
                   <p>current player id = {currentPlayer}</p>
+
                   <p>active user id = {activeUserId}</p>
                 </div>
                 <div>
                   <h4>players:</h4>
                   <div className='d-flex gap-2 p-2 '>
-                    {players.map(player => (
-                      <div key={player.id} className='border p-2 '>
-                        <i className='bi bi-person d-flex justify-content-center align-items-center' style={{ color: player.hero.color }}></i>
+                    {players.map(player => {
+                      let traderCount = player.traders ? player.traders.length : 0; // Check if player.traders is defined
+                      return (
+                        console.log(player),
+                        <div key={player.id} className={'p-2'} style={{ color: player.hero.color }}>
+                          <div className={'player ' + player.hero.name.replace(/\s+/g, '-').toLowerCase()}>
+                            {traderCount > 0 && (
+                              <p>{traderCount} trader{traderCount !== 1 ? 's' : ''} in sector {player.sector}</p>
+                            )}
+                          </div>
+                          ID: {player.id}, {player.hero.name}
+                        </div>
+                      );
+                    })}
 
-                        ID: {player.id},  {player.hero.name}
-                      </div>
-                    ))}
+
                   </div>
                 </div>
               </div>

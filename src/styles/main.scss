@@ -266,3 +266,29 @@ body {
        padding: 10px;
     }
 }
+.player{  
+      width: 100px;
+    height: 100px;
+    display: block;
+    margin: auto;
+    border-radius: 30px;
+    border: 1px solid #ccc;
+    padding: 1px;
+        background-size: cover;
+
+
+  &.ashot-the-butcher{
+  background-image: url('../../public/img/butcher.webp');
+ 
+}
+&.raisa-the-vendor{
+ background-image: url('../../public/img/raya.webp');
+}
+&.aza-of-gipsies{
+ background-image: url('../../public/img/aza.webp');
+}
+&.solomon-sea-wolf{
+ background-image: url('../../public/img/solomon.webp');
+}
+
+}
