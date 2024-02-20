@@ -162,27 +162,48 @@ color: rgb(56, 56, 6);
 
 .fruits {
   background: rgba(255, 204, 153, 1);
+    background-image: url('../../public/img/fruit.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .vegetables {
   background: rgba(153, 204, 153, 1);
+      background-image: url('../../public/img/vegetables.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
-.milk {
+.dairy {
   background: rgba(255, 255, 240, 1); /* Ivory */
+      background-image: url('../../public/img/dairy.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .fish {
   background: rgba(153, 204, 255, 1);
+      background-image: url('../../public/img/fish.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .meat {
   background: rgba(255, 204, 204, 1);
+      background-image: url('../../public/img/meat.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
-.stuff, .household {
-  background: rgba(188, 143, 143, 1); /* Rosy Brown */
+.household{
+      background-image: url('../../public/img/household.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
+
+// .stuff, .household {
+//   background: rgba(188, 143, 143, 1); /* Rosy Brown */
+// }
 
 
 .card-img-top{
@@ -224,4 +245,24 @@ color: rgb(56, 56, 6);
 
 .modal-90w{
   max-width: 90vw;
+}
+
+
+body {
+  // background-image: url('../../public/img/pr1.webp');
+  //   background-repeat: no-repeat;
+  //   background-size: cover;
+}
+.sector{
+  background-position: center;
+    min-height: 340px;
+    h4 {
+          background-color: rgba(255, 255, 255,  0.5);
+    width: fit-content;
+    padding: 10px;
+    }
+    .trader{
+       background-color: rgba(255, 255, 255,  0.5);
+       padding: 10px;
+    }
 }
