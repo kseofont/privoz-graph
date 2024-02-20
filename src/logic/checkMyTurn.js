@@ -1,10 +1,10 @@
 import { gql } from '@apollo/client';
 
-const GET_GAME_DATA = gql`
+// Define the GraphQL query
+export const GET_GAME_DATA = gql`
   query checkPhase {
     game {
-      currentPhase
-      currentTurnIndex
+     activePlayerId
       players {
         id
         hero {
@@ -26,13 +26,16 @@ const GET_GAME_DATA = gql`
   }
 `;
 
+// Function to check if it's the current player's turn
 async function checkMyTurn(client, currentPlayerId) {
   try {
     const { data } = await client.query({ query: GET_GAME_DATA });
-
-    // Check if player with currentPlayerId and same currentTurnIndex exists
-    const currentPlayerIndex = data.game.players.findIndex(player => player.id === currentPlayerId);
-    const myTurn = currentPlayerIndex !== -1 && currentPlayerIndex === data.game.currentTurnIndex;
+    //    console.log('data', data)
+    const activePlayer = data.game.players.find(player => player.id == data.game.activePlayerId);
+    //  console.log('activePlayer', activePlayer)
+    // Check if it's the current player's turn
+    const myTurn = activePlayer && activePlayer.id === currentPlayerId;
+    //  console.log('myTurn', myTurn);
     return myTurn;
   } catch (error) {
     // Handle error

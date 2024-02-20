@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-const GET_GAME_DATA = gql`
+export const GET_SECTOR_DATA = gql`
 query GetSectors {
   game {
     sectors {
@@ -19,7 +19,7 @@ query GetSectors {
 
 async function getSectors(client) {
     try {
-        const { data } = await client.query({ query: GET_GAME_DATA });
+        const { data } = await client.query({ query: GET_SECTOR_DATA });
         const sectors = data.game.sectors.filter(sector => sector.name !== 'Illegal');
         return sectors;
     } catch (error) {
