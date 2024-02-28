@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { Modal, Button } from 'react-bootstrap';
 import Sector from './components/Sector';
+import Player from './components/Player';
 import checkMyTurn, { GET_GAME_DATA } from './logic/checkMyTurn';
 import getSectors from './logic/getSectors';
 import getPlayers from './logic/getPlayers';
@@ -45,7 +46,8 @@ function App() {
     async function fetchActiveUserId() {
       try {
         const { data } = await client.query({ query: GET_GAME_DATA });
-        setActiveUserId(data.game.activePlayerId);
+        //  console.log('data', data);
+        setActiveUserId(data.game.moveOrder.activePlayerId);
       } catch (error) {
         console.error('Error fetching active user id:', error);
       }
@@ -100,25 +102,12 @@ function App() {
 
                   <p>active user id = {activeUserId}</p>
                 </div>
-                <div>
+                <div className='players-info'>
                   <h4>players:</h4>
                   <div className='d-flex gap-2 p-2 '>
-                    {players.map(player => {
-                      let traderCount = player.traders ? player.traders.length : 0; // Check if player.traders is defined
-                      return (
-                        console.log(player),
-                        <div key={player.id} className={'p-2'} style={{ color: player.hero.color }}>
-                          <div className={'player ' + player.hero.name.replace(/\s+/g, '-').toLowerCase()}>
-                            {traderCount > 0 && (
-                              <p>{traderCount} trader{traderCount !== 1 ? 's' : ''} in sector {player.sector}</p>
-                            )}
-                          </div>
-                          ID: {player.id}, {player.hero.name}
-                        </div>
-                      );
-                    })}
-
-
+                    {players.map(player => (
+                      <Player key={player.id} player={player} />
+                    ))}
                   </div>
                 </div>
               </div>
