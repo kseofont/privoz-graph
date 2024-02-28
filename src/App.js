@@ -19,6 +19,7 @@ function App() {
   const [players, setPlayers] = useState([]);
   const [showAddTraderModal, setShowAddTraderModal] = useState(false);
   const [showMaxTradersModal, setShowMaxTradersModal] = useState(false);
+  const [showRulesModal, setShowRulesModal] = useState(false);
   const [selectedSectorId, setSelectedSectorId] = useState(null);
   const currentPlayer = '13'; // Set initial current player
   const [activeUserId, setActiveUserId] = useState(null);
@@ -74,6 +75,11 @@ function App() {
     setShowMaxTradersModal(false);
   };
 
+  const handleCloseRulesModal = () => {
+    setShowRulesModal(false);
+
+  };
+
   const handleConfirmAddTrader = async () => {
     try {
       if (selectedSectorId) {
@@ -95,12 +101,20 @@ function App() {
             <div className="col-md-12">
               <h2>Privoz Bazar</h2>
               <div className="game-phase mb-2 border border-green px-3 py-2">
-                <h3>Game info</h3>
-                <div className="game-info d-flex gap-2">
 
-                  <p>current player id = {currentPlayer}</p>
+                <div className="game-info d-flex gap-2 justify-content-between">
+                  <div className="active-user-info">
+                    <p>current player id = {currentPlayer}</p>
 
-                  <p>active user id = {activeUserId}</p>
+                    <p>active user id = {activeUserId}</p>
+
+                  </div>
+                  <div className="game-info">
+                    <Button variant="info" onClick={() => setShowRulesModal(true)}>Show Rules</Button>
+                  </div>
+
+
+
                 </div>
                 <div className='players-info'>
                   <h4>players:</h4>
@@ -154,6 +168,19 @@ function App() {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="primary" onClick={handleCloseModal}>
+            OK
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal show={showRulesModal} onHide={handleCloseRulesModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Rules</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Current vers
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={handleCloseRulesModal}>
             OK
           </Button>
         </Modal.Footer>
