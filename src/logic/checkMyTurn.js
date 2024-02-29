@@ -19,11 +19,12 @@ async function checkMyTurn(client, currentPlayerId) {
     const { data } = await client.query({ query: GET_GAME_DATA });
     //    console.log('data', data)
     const activePlayer = data.game.moveOrder.activePlayerId;
+    const moveOrder = data.game.moveOrder;
     //  console.log('activePlayer', activePlayer)
     // Check if it's the current player's turn
     const myTurn = activePlayer && activePlayer.id === currentPlayerId;
     //  console.log('myTurn', myTurn);
-    return myTurn;
+    return moveOrder;
   } catch (error) {
     // Handle error
     console.error('Error while checking turn:', error);

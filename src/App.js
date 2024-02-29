@@ -20,6 +20,7 @@ function App() {
   const [showAddTraderModal, setShowAddTraderModal] = useState(false);
   const [showMaxTradersModal, setShowMaxTradersModal] = useState(false);
   const [showRulesModal, setShowRulesModal] = useState(false);
+  const [showProductsModal, setShowProductsModal] = useState(false);
   const [selectedSectorId, setSelectedSectorId] = useState(null);
   const currentPlayer = '13'; // Set initial current player
   const [activeUserId, setActiveUserId] = useState(null);
@@ -79,6 +80,10 @@ function App() {
     setShowRulesModal(false);
 
   };
+  const handleCloseProductsModal = () => {
+    setShowProductsModal(false);
+
+  };
 
   const handleConfirmAddTrader = async () => {
     try {
@@ -111,6 +116,7 @@ function App() {
                   </div>
                   <div className="game-info">
                     <Button variant="info" onClick={() => setShowRulesModal(true)}>Show Rules</Button>
+                    <Button variant="info" onClick={() => setShowProductsModal(true)}>Products</Button>
                   </div>
 
 
@@ -177,10 +183,30 @@ function App() {
           <Modal.Title>Rules</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Current vers
+          Ход игры:
+
+          1 Получение карт товаров - например - 7 карт на руку
+
+          2 Определение положения на карте:
+
+          Игроки по очереди выбирают места для своих продавцов в зонах.
+          3 Продажа всех товаров
         </Modal.Body>
         <Modal.Footer>
           <Button variant="primary" onClick={handleCloseRulesModal}>
+            OK
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal show={showProductsModal} onHide={handleCloseProductsModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Products</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={handleCloseProductsModal}>
             OK
           </Button>
         </Modal.Footer>
