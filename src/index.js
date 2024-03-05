@@ -22,9 +22,9 @@ root.render(
       <BrowserRouter>
         <Routes>
 
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Login />} />
 
-          <Route path="/" element={<App />} />
+          <Route path="/game" element={<App />} />
         </Routes>
       </BrowserRouter>
 

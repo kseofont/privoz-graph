@@ -1,6 +1,6 @@
-import {Dropdown} from 'react-bootstrap';
-import {ApolloClient, InMemoryCache} from "@apollo/client";
-import {useEffect, useState} from "react";
+import { Dropdown } from 'react-bootstrap';
+import { ApolloClient, InMemoryCache } from "@apollo/client";
+import { useEffect, useState } from "react";
 import getPlayers from "../logic/getPlayers";
 
 const client = new ApolloClient({
@@ -32,7 +32,7 @@ function Login() {
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                         {players.map((player) => (
-                            <Dropdown.Item href={"/?player=" + player.id}> Player: {player.id}</Dropdown.Item>
+                            <Dropdown.Item href={"/game?player=" + player.id}> Player: {player.id}</Dropdown.Item>
                         ))}
                     </Dropdown.Menu>
                 </Dropdown>
