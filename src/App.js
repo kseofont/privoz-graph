@@ -22,7 +22,7 @@ function App() {
   const [showRulesModal, setShowRulesModal] = useState(false);
   const [showProductsModal, setShowProductsModal] = useState(false);
   const [selectedSectorId, setSelectedSectorId] = useState(null);
-  const currentPlayer = '13'; // Set initial current player
+  const currentPlayer = '21'; // Set initial current player
   const [activeUserId, setActiveUserId] = useState(null);
   const [error, setError] = useState(null);
 

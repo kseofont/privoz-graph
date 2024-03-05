@@ -4,7 +4,9 @@ import React from 'react';
 import { createRoot } from 'react-dom/client'; // Import createRoot from react-dom/client
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import App from './App';
+import Login from './components/Login';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 // Create an ApolloClient instance
 const client = new ApolloClient({
@@ -17,7 +19,15 @@ const root = createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <App />
+      <BrowserRouter>
+        <Routes>
+
+          <Route path="/login" element={<Login />} />
+
+          <Route path="/" element={<App />} />
+        </Routes>
+      </BrowserRouter>
+
     </ApolloProvider>
   </React.StrictMode>
 );
