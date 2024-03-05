@@ -8,6 +8,7 @@ import getSectors from './logic/getSectors';
 import getPlayers from './logic/getPlayers';
 import addTrader from './logic/addTrader'; // Import addTrader function
 import GraphError from './modals/GraphError';
+import {useSearchParams} from "react-router-dom";
 
 const client = new ApolloClient({
   uri: 'https://privoz.lavron.dev/graphql/',
@@ -22,7 +23,8 @@ function App() {
   const [showRulesModal, setShowRulesModal] = useState(false);
   const [showProductsModal, setShowProductsModal] = useState(false);
   const [selectedSectorId, setSelectedSectorId] = useState(null);
-  const currentPlayer = '21'; // Set initial current player
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentPlayer = searchParams.get("player"); // Set initial current player
   const [activeUserId, setActiveUserId] = useState(null);
   const [error, setError] = useState(null);
 

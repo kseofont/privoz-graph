@@ -6,7 +6,7 @@ query GetPlayers {
     players {
       traders {
         id
-        playerId
+        playerId:id
         products
       }
       coins
