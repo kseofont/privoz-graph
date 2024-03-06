@@ -30,6 +30,8 @@ jobs:
           server: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: ${{ secrets.FTP_PATH }}
+          port: 21
+          protocol: ftp
           local-dir: build
-          fail-on-error: true
+          server-dir: ${{ secrets.FTP_PATH }}
+          log-level: 2
