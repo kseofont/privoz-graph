@@ -34,4 +34,4 @@ jobs:
           protocol: ftp
           local-dir: build
           server-dir: ${{ secrets.FTP_PATH }}
-          log-level: 2
+          log-level: verbose
