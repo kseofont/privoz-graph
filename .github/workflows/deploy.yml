@@ -24,6 +24,10 @@ jobs:
       - name: Build project
         run: npm run build
 
+      - name: Copy build directory
+          run: |
+            rsync -a build/ $GITHUB_WORKSPACE/build/
+
       - name: Deploy to server
         uses: SamKirkland/FTP-Deploy-Action@4.0.0
         with:
