@@ -8,7 +8,7 @@ jobs:
       - name: Get latest code
         uses: actions/checkout@v3
       - name: Sync files
-        uses: kseofont/privoz-graph@[1.0.0]
+        uses: kseofont/privoz-graph
         with:
           server: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.FTP_USER }}
