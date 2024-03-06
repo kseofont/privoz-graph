@@ -21,7 +21,7 @@ function Login() {
     }, []);
 
     return (
-        <div className="login 1">
+        <div className="login">
             <div className="login-title">
                 <h3>Login</h3>
             </div>
