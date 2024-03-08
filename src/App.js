@@ -3,6 +3,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { Modal, Button } from 'react-bootstrap';
 import Sector from './components/Sector';
 import Player from './components/Player';
+import CurrentPlayer from './components/CurrentPlayer';
 import checkMyTurn, { GET_GAME_DATA } from './logic/checkMyTurn';
 import getSectors from './logic/getSectors';
 import getPlayers from './logic/getPlayers';
@@ -133,7 +134,7 @@ function App() {
                   </div>
                 </div>
               </div>
-              <div className="row row-cols-1 row-cols-md-2">
+              <div className="row row-cols-1 row-cols-md-3">
                 {sectors.map(sector => (
                   <Sector
                     key={sector.id}
@@ -143,6 +144,12 @@ function App() {
                     handleAddTrader={handleAddTrader}
                   />
                 ))}
+              </div>
+              <div className="current-player-info">
+                {players.filter(player => player.id === currentPlayer).map(player => (
+                  <CurrentPlayer key={player.id} player={player} />
+                ))}
+
               </div>
             </div>
           </div>

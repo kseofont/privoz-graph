@@ -10,10 +10,12 @@ query GetPlayers {
         product {
           id
           buyPrice
+          sellPrice
           description
           name
           sector {
             id
+            name
           }
           image
           isLegal

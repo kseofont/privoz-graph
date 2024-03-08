@@ -1,7 +1,8 @@
-// /components/Player.js
+// /components/CurrentPlayer.js
 import React from 'react';
+import ProductCard from './ProductCard';
 
-function Player({ player }) {
+function CurrentPlayer({ player }) {
     let traderCount = player.traders ? player.traders.length : 0; // Check if player.traders is defined
     console.log('player', player)
 
@@ -32,6 +33,7 @@ function Player({ player }) {
                     <div className='d-flex align-self-center align-items-center flex-column '>
                         <img src={`${process.env.PUBLIC_URL}/img/event-card-img.webp`} alt="Product Card" className='event-card-img product-card-img' />
                         {Number.isInteger(player.productCards?.length) ? player.productCards.length : 0}
+
                     </div>
 
 
@@ -41,8 +43,16 @@ function Player({ player }) {
                     {/* If you want to display the hero's image, ensure you have a valid src. If it's empty, you might want to handle it accordingly. */}
                     {player.hero.image && <div>Hero Image: <img src={player.hero.image} alt={player.hero.name} style={{ width: '50px', height: '50px' }} /></div>}
                 </div>
+                <div className="cards-info d-flex justify-content-between">
+                    {player.productCards.map(productCard => (
+                        console.log('productCard', productCard),
+
+                        <ProductCard key={productCard.id} productCard={productCard} />
+                    ))}
+
+                </div>
                 <div className="player-info-dev">
-                    <div>Player ID: {player.id}</div>
+                    <div>CurrentPlayer ID: {player.id}</div>
                     <div>Hero ID: {player.hero.id}</div>
 
 
@@ -54,4 +64,4 @@ function Player({ player }) {
     );
 }
 
-export default Player;
+export default CurrentPlayer;
