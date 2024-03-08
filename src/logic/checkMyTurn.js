@@ -4,9 +4,10 @@ import { gql } from '@apollo/client';
 export const GET_GAME_DATA = gql`
   query checkPhase {
   game {
-    moveOrder {
+    id
+    queue {
       activePlayerId
-      currentPhase
+      phase
       playersOrderIds
     }
   }
@@ -18,13 +19,13 @@ async function checkMyTurn(client, currentPlayerId) {
   try {
     const { data } = await client.query({ query: GET_GAME_DATA });
     //    console.log('data', data)
-    const activePlayer = data.game.moveOrder.activePlayerId;
-    const moveOrder = data.game.moveOrder;
+    const activePlayer = data.game.queue.activePlayerId;
+    const queue = data.game.queue;
     //  console.log('activePlayer', activePlayer)
     // Check if it's the current player's turn
     const myTurn = activePlayer && activePlayer.id === currentPlayerId;
     //  console.log('myTurn', myTurn);
-    return moveOrder;
+    return queue;
   } catch (error) {
     // Handle error
     console.error('Error while checking turn:', error);

@@ -8,7 +8,7 @@ import getSectors from './logic/getSectors';
 import getPlayers from './logic/getPlayers';
 import addTrader from './logic/addTrader'; // Import addTrader function
 import GraphError from './modals/GraphError';
-import {useSearchParams} from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 const client = new ApolloClient({
   uri: 'https://privoz.lavron.dev/graphql/',
@@ -51,7 +51,7 @@ function App() {
       try {
         const { data } = await client.query({ query: GET_GAME_DATA });
         //  console.log('data', data);
-        setActiveUserId(data.game.moveOrder.activePlayerId);
+        setActiveUserId(data.game.queue.activePlayerId);
       } catch (error) {
         console.error('Error fetching active user id:', error);
       }

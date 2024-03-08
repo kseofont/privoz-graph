@@ -3,14 +3,28 @@ import { gql } from '@apollo/client';
 export const GET_SECTOR_DATA = gql`
 query GetSectors {
   game {
+    id
     sectors {
-      traders {
-        id
-        playerId
-        products
-      }
       id
       name
+      traders {
+        id
+        player {
+          id
+          productCards {
+            id
+            product {
+              name
+            }
+          }
+          hero {
+            id
+            name
+            color
+            image
+          }
+        }
+      }
     }
   }
 }
