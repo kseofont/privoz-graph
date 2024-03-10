@@ -49,7 +49,8 @@ function CurrentPlayer({ player }) {
 
             <div className="d-flex flex-column ">
 
-                <div className="cards-info d-flex justify-content-between">
+                <div className="cards-info d-flex justify-content-between flex-column flex-sm-row ">
+
                     {player.productCards.map(productCard => (
                         console.log('productCard', productCard),
 

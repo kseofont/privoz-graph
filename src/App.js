@@ -127,7 +127,7 @@ function App() {
                 </div>
                 <div className='players-info'>
                   <h4>players:</h4>
-                  <div className='d-flex gap-2 p-2 '>
+                  <div class="d-flex flex-column flex-sm-row gap-2 p-2">
                     {players.map(player => (
                       <Player key={player.id} player={player} />
                     ))}
