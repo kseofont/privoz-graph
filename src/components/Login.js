@@ -36,9 +36,7 @@ function Login() {
                         ))}
                     </Dropdown.Menu>
                 </Dropdown>
-                <div className="test"> <h4>show me WITH GOD BLESS</h4></div>
-                <div className="test"> <h4>v991</h4></div>
-                <div className="test"> <h4>success</h4></div>
+
             </div>
         </div>
     );
