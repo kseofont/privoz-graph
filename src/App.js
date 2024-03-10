@@ -110,7 +110,7 @@ function App() {
               <h2>Privoz Bazar</h2>
               <div className="game-phase mb-2 border border-green px-3 py-2">
 
-                <div className="game-info d-flex gap-2 justify-content-between">
+                <div className="game-info d-flex flex-column flex-sm-row  gap-2 justify-content-between">
                   <div className="active-user-info">
                     <p>current player id = {currentPlayer}</p>
 
