@@ -211,7 +211,7 @@ function App() {
         <Modal.Header closeButton>
           <Modal.Title>Products</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body> we will show smth here later
 
         </Modal.Body>
         <Modal.Footer>
