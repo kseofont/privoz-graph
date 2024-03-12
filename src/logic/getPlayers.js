@@ -21,6 +21,7 @@ query GetPlayers {
         }
         sector {
           id
+          name
         }
       }
       id

@@ -20,8 +20,8 @@ const ProductCard = ({ productCard }) => {
                 {productCard.product.sellPrice != null && ( // Conditionally render price if available
                     <p className="card-text">Sell Price: <span className="green">${productCard.product.sellPrice}</span></p>
                 )}
-                {productCard.product.sector && productCard.product.sector.name && ( // Conditionally render price if available
-                    <p className="card-text">Sector: <span className="">{productCard.product.sector.name}</span></p>
+                {productCard.sector.name && ( // Conditionally render price if available
+                    <p className="card-text">Sector: <span className="">{productCard.sector.name}</span></p>
                 )}
                 {productCard.product.stock != null && ( // Conditionally render stock if available
                     <p className="card-text">Stock: {productCard.product.stock}</p>
