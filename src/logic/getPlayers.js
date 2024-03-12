@@ -3,38 +3,38 @@ import { gql } from '@apollo/client';
 const GET_PLAYERS_DATA = gql`
 query GetPlayers {
   game {
-      players {
-      coins
+    sectors {
       id
+      name
+    }
+    players {
       productCards {
+        id
         product {
-          id
-          buyPrice
-          sellPrice
-          description
           name
-          sector {
-            id
-            name
-          }
+          buyPrice
+          description
+          id
           image
           isLegal
+          sellPrice
         }
-        id
+        sector {
+          id
+        }
       }
+      id
       hero {
-        name
-        id
-        color
-        image
         premiumSector {
           id
           name
         }
-      }
-      traders {
+        color
         id
+        image
+        name
       }
+      coins
     }
   }
 }
