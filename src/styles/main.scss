@@ -97,6 +97,15 @@ $purple: rgba(128, 0, 128, 0.2);
 $brown: rgba(56, 56, 6, 0.2);
 $yellow: #ffff00; 
 
+
+$fruits:rgba(255, 204, 153, 1);
+$vegetables: rgba(153, 204, 153, 1);
+$dairy: rgba(255, 255, 240, 1);
+$fish: rgba(153, 204, 255, 1);
+$meat: rgba(255, 204, 204, 1);
+$household:  rgba(56, 56, 6, 1);
+$illegal: rgba(204, 204, 204, 0.75);
+
 .bg-red {
   background-color: $red;
 }
@@ -159,49 +168,89 @@ color: rgb(56, 56, 6);
 }
 
 .fruits {
-  background: rgba(255, 204, 153, 1);
+  border: 1px solid $fruits;
+    background: $fruits;
+  &:not(.card){
+
     background-image: url('../../public/img/fruit.webp');
     background-repeat: no-repeat;
     background-size: cover;
+  }
 }
 
 .vegetables {
-  background: rgba(153, 204, 153, 1);
+    border: 1px solid $vegetables;
+     background: $vegetables;
+  &:not(.card){
+ 
+
       background-image: url('../../public/img/vegetables.webp');
     background-repeat: no-repeat;
     background-size: cover;
 }
+}
 
 .dairy {
-  background: rgba(255, 255, 240, 1); /* Ivory */
+      border: 1px solid $dairy;
+      background: $dairy;
+  &:not(.card){
+  
+
       background-image: url('../../public/img/dairy.webp');
     background-repeat: no-repeat;
     background-size: cover;
-}
+}}
 
 .fish {
-  background: rgba(153, 204, 255, 1);
+       border: 1px solid $fish;  background: $fish;
+  &:not(.card){
+
+
       background-image: url('../../public/img/fish.webp');
     background-repeat: no-repeat;
     background-size: cover;
-}
+}}
 
 .meat {
-  background: rgba(255, 204, 204, 1);
+       border: 1px solid $meat;
+         background: $meat;
+  &:not(.card){
+
+
       background-image: url('../../public/img/meat.webp');
     background-repeat: no-repeat;
     background-size: cover;
-}
+}}
 
 .household{
+       border: 1px solid $household;
+        background: $household;
+  &:not(.card){
+
       background-image: url('../../public/img/household.webp');
     background-repeat: no-repeat;
     background-size: cover;
+}}
+.illegal{
+   border: 1px solid $illegal;
+        background: $illegal;
 }
 
 // .stuff, .household {
 //   background: rgba(188, 143, 143, 1); /* Rosy Brown */
 // }
+.player-cards{
+      background: rgba(239, 216, 193, 0.3);
+}
+.game-info{
+      display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+    justify-content: space-between;
+    gap: inherit;
+}
 
 
 .card-img-top{
@@ -230,6 +279,12 @@ color: rgb(56, 56, 6);
     max-width: 70vw;
     margin-left: auto;
     margin-right: auto;
+}
+.product-card{
+  cursor: pointer;
+  &:hover{
+    opacity: 0.75;
+  }
 }
 
 
@@ -284,6 +339,10 @@ body {
     border: 1px solid #ccc;
     padding: 1px;
         background-size: cover;
+        .current-player-info &{
+          width: 200px;
+          height: 200px;
+        }
 
 
   &.ashot-the-butcher{

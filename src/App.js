@@ -106,7 +106,7 @@ function App() {
       <div className="App">
         <div className="container-fluid">
           <div className="row">
-            <div className="col-md-12">
+            <div className="col p-0">
               <h2>Privoz Bazar</h2>
               <div className="game-phase mb-2 border border-green px-3 py-2">
 
@@ -134,7 +134,7 @@ function App() {
                   </div>
                 </div>
               </div>
-              <div className="row row-cols-1 row-cols-md-3">
+              <div className="row row-cols-1 row-cols-md-3 px-2">
                 {sectors.map(sector => (
                   <Sector
                     key={sector.id}

@@ -9,7 +9,7 @@ function Sector({ sector, players, handleAddTrader }) {
 
     return (
         <div className="col mb-3">
-            <div className={`sector border p-3 mb-3 h-100 ${sector.name.toLowerCase()}`}>
+            <div className={`sector  p-3 mb-3 h-100 ${sector.name.toLowerCase()}`}>
                 <h4>{sector.name}</h4>
                 <div className="">
                     <div className={`justify-content-between d-flex`}>

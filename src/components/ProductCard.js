@@ -7,7 +7,8 @@ const ProductCard = ({ productCard }) => {
     const imageUrl = `./img/${productCard.product.image}`;
 
     return (
-        <div className="card mt-3   mb-3 p-3">
+        <div className={`product-card card mt-3 mb-3 p-3 ${productCard.sector.name && productCard.sector.name.toLowerCase()}`}>
+
             <img src={imageUrl} className="card-img-top" alt={productCard.product.name} />
             <div className="card-body">
 

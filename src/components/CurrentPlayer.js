@@ -7,7 +7,7 @@ function CurrentPlayer({ player }) {
     console.log('player', player)
 
     return (
-        <div key={player.id} className={'p-2'} style={{ color: player.hero.color }}>
+        <div key={player.id} className={'py-2'} style={{ color: player.hero.color }}>
             <div className="d-flex flex-column">
 
 
@@ -47,12 +47,12 @@ function CurrentPlayer({ player }) {
 
             </div>
 
-            <div className="d-flex flex-column ">
+            <div className="d-flex flex-column px-2 player-cards">
 
                 <div className="cards-info d-flex justify-content-between flex-column flex-sm-row ">
 
                     {player.productCards.map(productCard => (
-                        console.log('productCard', productCard),
+                        //  console.log('productCard', productCard),
 
                         <ProductCard key={productCard.id} productCard={productCard} />
                     ))}
