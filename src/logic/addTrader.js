@@ -1,59 +1,42 @@
-import { gql } from '@apollo/client';
-import client from '../client';
-import { GET_SECTOR_DATA } from './getSectors'; // Import the GET_SECTOR_DATA query
-
-const ADD_TRADER = gql`
-  mutation addTrader($playerId: Int!, $sectorId: Int!) {
-    addTrader(playerId: $playerId, sectorId: $sectorId) {
-      trader {
-        id
-        player {
-          id
-        }
-        sector {
-          id
-        }
-      }
-    }
-  }
-`;
-
-const addTrader = async (sectorId, playerId, setError, setSectors) => {
+const addTrader = async (selectedSectorId, currentPlayerObject, setError, setSectors, sectors, setProduct, product) => {
   try {
-    // Parse playerId and sectorId to integers
-    playerId = parseInt(playerId);
-    sectorId = parseInt(sectorId);
+    // Assuming currentPlayerObject has a property `productCards` which is an array
+    const updatedSectors = sectors.map(sector => {
+      // Check if the sector id matches the selected sector id
+      if (sector.id === selectedSectorId) {
+        // Assuming sector has a property `traders` which is an array
+        const updatedTraders = [
+          ...sector.traders,
+          {
+            id: currentPlayerObject.id, // Assuming you want to add player id as trader id
+            player: currentPlayerObject
+          }
+        ];
 
-    // Perform validation to check if playerId and sectorId are valid
-    if (!playerId || !sectorId || isNaN(playerId) || isNaN(sectorId)) {
-      throw new Error('Player ID and Sector ID must be valid integers');
-    }
+        // Check if currentPlayerObject has productCards
+        if (currentPlayerObject.productCards) {
+          // Update sector productCards based on currentPlayerObject's productCards
+          sector.productCards = currentPlayerObject.productCards.filter(productCard =>
+            productCard.sector.id === sector.id
+          );
+        }
 
-    // Send the mutation request to the server
-    const { data } = await client.mutate({
-      mutation: ADD_TRADER,
-      variables: {
-        playerId,
-        sectorId
+        // Filter product cards of the currentPlayerObject that have the same sector ID as the selected sector
+        const filteredProductCards = currentPlayerObject.productCards.filter(card => card.sector.id === selectedSectorId);
+
+        // Update the product state with the filtered product cards
+        setProduct([...product, ...filteredProductCards]);
+
+        return { ...sector, traders: updatedTraders };
       }
+      console.log('sector', sector)
+      return sector;
     });
+    console.log('secto1', sector)
 
-    // Refetch sectors data after adding trader
-    const { data: sectorData } = await client.query({
-      query: GET_SECTOR_DATA
-    });
-
-    // Update sectors state with new sector data
-    setSectors(sectorData.game.sectors);
-
-    // Extract and return the trader data from the response
-    return data.addTrader.trader;
+    // Update the sectors state with the updated sectors
+    setSectors(updatedSectors);
   } catch (error) {
-    // Set the error state to display the error modal
-    console.error(error);
-    setError(error);
-    throw error; // Rethrow the error to be caught by the calling function if needed
+    setError(error.message);
   }
 };
-
-export default addTrader;

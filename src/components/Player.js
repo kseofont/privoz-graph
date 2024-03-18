@@ -3,7 +3,7 @@ import React from 'react';
 
 function Player({ player }) {
     let traderCount = player.traders ? player.traders.length : 0; // Check if player.traders is defined
-    console.log('player', player)
+    // console.log('player', player)
 
     return (
         <div key={player.id} className={'p-2'} style={{ color: player.hero.color }}>

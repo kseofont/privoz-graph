@@ -10,6 +10,8 @@ import getPlayers from './logic/getPlayers';
 import addTrader from './logic/addTrader'; // Import addTrader function
 import GraphError from './modals/GraphError';
 import { useSearchParams } from "react-router-dom";
+import getTrader from './logic/getTrader';
+
 
 const client = new ApolloClient({
   uri: 'https://privoz.lavron.dev/graphql/',
@@ -19,6 +21,7 @@ const client = new ApolloClient({
 function App() {
   const [sectors, setSectors] = useState([]);
   const [players, setPlayers] = useState([]);
+  const [product, setProduct] = useState([]);
   const [showAddTraderModal, setShowAddTraderModal] = useState(false);
   const [showMaxTradersModal, setShowMaxTradersModal] = useState(false);
   const [showRulesModal, setShowRulesModal] = useState(false);
@@ -40,6 +43,7 @@ function App() {
 
       setSectors(sectorsData); // Set sectors daa in state
       const isMyTurn = await checkMyTurn(client, currentPlayer);
+      console.log('currentPlayer', currentPlayer)
       if (isMyTurn) {
         nextStep();
       }
@@ -88,10 +92,26 @@ function App() {
 
   };
 
-  const handleConfirmAddTrader = async () => {
+  const handleConfirmGetTrader = async () => {
     try {
-      if (selectedSectorId) {
-        await addTrader(selectedSectorId, currentPlayer, setError, setSectors);
+      if (selectedSectorId && currentPlayer) {
+        const currentPlayerObject = players.find(player => player.id === currentPlayer);
+        if (currentPlayerObject) {
+
+          console.log('sectors', sectors)
+          console.log('currentPlayerObject', currentPlayerObject)
+          // Filter product cards of the currentPlayerObject that have the same sector ID as the selected sector
+          const filteredProductCards = currentPlayerObject.productCards.filter(card => card.sector.id === selectedSectorId);
+
+          // Update the product state with the filtered product cards
+          setProduct([...product, ...filteredProductCards]);
+          console.log('filteredProductCards', filteredProductCards)
+
+          // Example call to getTrader
+          await getTrader(client, currentPlayerObject.id, selectedSectorId, filteredProductCards.map(card => card.id), setError, setSectors, sectors, setProduct, product);
+
+          //   await getTrader(selectedSectorId, currentPlayerObject, setError, setSectors, sectors, setProduct, product);
+        }
         setShowAddTraderModal(false);
       }
     } catch (error) {
@@ -168,8 +188,8 @@ function App() {
           <Button variant="secondary" onClick={handleCloseModal}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={handleConfirmAddTrader}>
-            Add Trader
+          <Button variant="primary" onClick={handleConfirmGetTrader}>
+            Get Trader
           </Button>
         </Modal.Footer>
       </Modal>

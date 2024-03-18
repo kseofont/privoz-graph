@@ -2,8 +2,8 @@ import React from 'react';
 //import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 
 const ProductCard = ({ productCard }) => {
-    console.log('productCard', productCard)
-    console.log('productCard.product.sellPrice ', productCard.product.sellPrice)
+    //  console.log('productCard', productCard)
+    //  console.log('productCard.product.sellPrice ', productCard.product.sellPrice)
     const imageUrl = `./img/${productCard.product.image}`;
 
     return (

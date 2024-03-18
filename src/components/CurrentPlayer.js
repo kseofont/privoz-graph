@@ -4,7 +4,7 @@ import ProductCard from './ProductCard';
 
 function CurrentPlayer({ player }) {
     let traderCount = player.traders ? player.traders.length : 0; // Check if player.traders is defined
-    console.log('player', player)
+    //console.log('player', player)
 
     return (
         <div key={player.id} className={'py-2'} style={{ color: player.hero.color }}>

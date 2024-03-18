@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
+
 function GraphError({ show, onClose, errorMessage, originalError }) {
     return (
         <Modal show={show} onHide={onClose}>

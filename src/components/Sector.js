@@ -18,10 +18,15 @@ function Sector({ sector, players, handleAddTrader }) {
                             trader.player && (
                                 <div key={trader.id} className={`trader d-flex flex-column ustify-content-center align-items-center gap-1 ${columnClass}`} >
 
-                                    <i className='bi bi-person d-flex justify-content-center align-items-center' style={{ color: trader.player.hero }}></i>
+                                    <i className='bi bi-person d-flex justify-content-center align-items-center'
+                                        style={{ color: trader.player.hero?.color }}>
+                                    </i>
+
+
                                     <p>{trader.player.id}</p>
-                                    {console.log(trader)}
-                                    <p>{trader.player.hero}</p>
+                                    <p>{trader.player.hero.name}</p>
+                                    {console.log('trader', trader)}
+
                                 </div>
                             )
                         ))}
@@ -37,7 +42,7 @@ function Sector({ sector, players, handleAddTrader }) {
 
                     </div>
                 </div>
-                <button onClick={() => handleAddTrader(sector.id)}>Add Trader</button>
+                <button onClick={() => handleAddTrader(sector.id)}>Get Trader</button>
             </div>
         </div>
     );

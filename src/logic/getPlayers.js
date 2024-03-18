@@ -44,7 +44,7 @@ query GetPlayers {
 async function GetPlayers(client) {
   try {
     const { data } = await client.query({ query: GET_PLAYERS_DATA });
-    console.log(data)
+    //  console.log(data)
     const players = data.game.players;
     return players;
   } catch (error) {
