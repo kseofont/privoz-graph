@@ -7,11 +7,11 @@ import CurrentPlayer from './components/CurrentPlayer';
 import checkMyTurn, { GET_GAME_DATA } from './logic/checkMyTurn';
 import getSectors from './logic/getSectors';
 import getPlayers from './logic/getPlayers';
-import addTrader from './logic/addTrader'; // Import addTrader function
+//import addTrader from './logic/addTrader'; // Import addTrader function
 import GraphError from './modals/GraphError';
 import { useSearchParams } from "react-router-dom";
 import getTrader from './logic/getTrader';
-
+import AddProducts from './modals/AddProducts'; 
 
 const client = new ApolloClient({
   uri: 'https://privoz.lavron.dev/graphql/',
@@ -69,6 +69,7 @@ function App() {
   };
 
   const handleAddTrader = (sectorId) => {
+  
     setSelectedSectorId(sectorId);
     const sector = sectors.find(sector => sector.id === sectorId);
     if (sector && sector.traders.length > players.length) {
@@ -91,6 +92,13 @@ function App() {
     setShowProductsModal(false);
 
   };
+  const handleAddProducts = (sectorId) => {
+    console.log(sectorId);
+    setSelectedSectorId(sectorId);
+    setShowProductsModal(true);
+
+  };
+  const player = players.find(player => player.id === currentPlayer) || null;
 
   const handleConfirmGetTrader = async () => {
     try {
@@ -162,6 +170,7 @@ function App() {
                     players={players}
                     currentPlayer={currentPlayer}
                     handleAddTrader={handleAddTrader}
+                    handleAddProducts={handleAddProducts}
                   />
                 ))}
               </div>
@@ -227,19 +236,14 @@ function App() {
           </Button>
         </Modal.Footer>
       </Modal>
-      <Modal show={showProductsModal} onHide={handleCloseProductsModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Products</Modal.Title>
-        </Modal.Header>
-        <Modal.Body> we will show smth here later
-
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="primary" onClick={handleCloseProductsModal}>
-            OK
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      {player && <AddProducts
+        show={showProductsModal}
+        onHide={handleCloseProductsModal}
+        player={player}
+        sectorId={selectedSectorId}
+        setError={setError}
+        client={client}
+      />}
       {error && <GraphError show={true} onClose={() => setError(null)} errorMessage={error} originalError={error} />}
 
     </ApolloProvider>

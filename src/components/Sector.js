@@ -1,11 +1,15 @@
 // Sector.js
 import React from 'react';
 
-function Sector({ sector, players, handleAddTrader }) {
+function Sector({ sector, players, handleAddTrader, handleAddProducts, currentPlayer }) {
     const numPlayers = players.length;
     const numColumns = Math.min(numPlayers, 6);
     const columnClass = `col-md-${Math.floor(12 / numColumns)}`;
     const currentTradersCount = sector.traders.length;
+    console.log(currentPlayer);
+    const currentPlayerData = players.find(player => player.id === currentPlayer) || null;
+
+    
 
     return (
         <div className="col mb-3">
@@ -25,7 +29,7 @@ function Sector({ sector, players, handleAddTrader }) {
 
                                     <p>{trader.player.id}</p>
                                     <p>{trader.player.hero.name}</p>
-                                    {console.log('trader', trader)}
+                                 
 
                                 </div>
                             )
@@ -43,6 +47,7 @@ function Sector({ sector, players, handleAddTrader }) {
                     </div>
                 </div>
                 <button onClick={() => handleAddTrader(sector.id)}>Get Trader</button>
+                <button onClick={() => handleAddProducts(sector.id)}>Add Products</button>
             </div>
         </div>
     );

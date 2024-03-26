@@ -286,6 +286,14 @@ color: rgb(56, 56, 6);
   &:hover{
     opacity: 0.75;
   }
+  
+}
+.product-card-wrap{
+      border-radius: calc(0.4rem - 1px);
+   
+&.active{
+    border:1px solid #ff0000
+  }
 }
 
 

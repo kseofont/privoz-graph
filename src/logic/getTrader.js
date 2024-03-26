@@ -12,7 +12,7 @@ const GET_TRADER_MUTATION = gql`
 `;
 
 
-console.log('Mutation addsdsdsd');
+//console.log('Mutation addsdsdsd');
 
 // Create the getTrader function
 async function getTrader(client, playerId, sectorId, productCardsIds, setError, setSectors, sectors, setProduct, product) {
@@ -60,3 +60,4 @@ async function getTrader(client, playerId, sectorId, productCardsIds, setError, 
 // Then, you would call getTrader(...) with the appropriate parameters where needed in your App component
 
 export default getTrader;
+
