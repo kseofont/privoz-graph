@@ -283,6 +283,7 @@ color: rgb(56, 56, 6);
 }
 .product-card{
   cursor: pointer;
+      min-width: 160px;
   &:hover{
     opacity: 0.75;
   }
@@ -398,4 +399,23 @@ body {
 }
 .event-card-img{
   width: 40px;
+}
+#root{
+  overflow: hidden;
+}
+.scroll-row{
+  overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+        margin: 0 -15px;
+    padding-left: 15px;
+}
+.cards-info{
+      overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    /* width: 100000px; */
+    max-width: fit-content;
 }

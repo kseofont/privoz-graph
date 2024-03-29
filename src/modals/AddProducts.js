@@ -3,7 +3,7 @@ import { Modal, Button } from 'react-bootstrap';
 import ProductCard from '../components/ProductCard';
 import getTrader from '../logic/getTrader';
 
-const AddProducts = ({ show, onHide, player, sectorId, setError, client }) => {
+const AddProducts = ({ show, onHide, player, sectorId, setError, client, sectors, setSectors }) => {
     const [activeCards, setActiveCards] = useState([]);
 
     const toggleActiveCard = (cardId) => {
@@ -14,9 +14,10 @@ const AddProducts = ({ show, onHide, player, sectorId, setError, client }) => {
         );
     };
 
-
+    console.log('Addtrader sectors', sectors)
     const handleOkClick = async () => {
         try {
+            console.log('sectors handle ' , sectors)
             await getTrader(
                 // Assuming `client` and other parameters are available in your scope
                 client,
@@ -24,6 +25,7 @@ const AddProducts = ({ show, onHide, player, sectorId, setError, client }) => {
                 sectorId,
                 activeCards,
                 setError,
+                sectors, setSectors
                 // Ensure other parameters expected by getTrader are correctly passed
             );
             // Additional logic after successful getTrader call
@@ -58,7 +60,7 @@ const AddProducts = ({ show, onHide, player, sectorId, setError, client }) => {
                 </div>
                 Sector ID: {sectorId}
                 <div>Cards to Add:</div>
-                <div className='d-flex gap-2'>
+                <div className='d-flex gap-2 scroll-row'>
                     {matchingCards.map(card => (
                         <div key={card.id} onClick={() => toggleActiveCard(card.id)}
                             className={`product-card-wrap ${activeCards.includes(card.id) ? 'active' : ''}`}>

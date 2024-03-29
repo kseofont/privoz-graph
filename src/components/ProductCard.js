@@ -7,14 +7,13 @@ const ProductCard = ({ productCard }) => {
     const imageUrl = `./img/${productCard.product.image}`;
 
     return (
-        <div className={`product-card card  p-3 ${productCard.sector.name && productCard.sector.name.toLowerCase()}`}>
+        <div className={`product-card card px-2 py-3 ${productCard.sector.name && productCard.sector.name.toLowerCase()}`}>
 
             <img src={imageUrl} className="card-img-top" alt={productCard.product.name} />
-            <div className="card-body">
+            <div className="card-body p-1">
 
                 <h5 className="card-title">{productCard.product.name}</h5>
-                <p className="card-text">{productCard.product.description}</p>
-
+               
                 {productCard.product.buyPrice != null && (
                     <p className="card-text">Buy Price: <span className='red'>${productCard.product.buyPrice}</span></p>
                 )}

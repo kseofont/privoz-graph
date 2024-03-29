@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-const GET_PLAYERS_DATA = gql`
+export const GET_PLAYERS_DATA = gql`
 query GetPlayers {
   game {
     sectors {

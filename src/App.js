@@ -13,13 +13,20 @@ import { useSearchParams } from "react-router-dom";
 import getTrader from './logic/getTrader';
 import AddProducts from './modals/AddProducts'; 
 
-const client = new ApolloClient({
+export const client = new ApolloClient({
   uri: 'https://privoz.lavron.dev/graphql/',
   cache: new InMemoryCache()
 });
 
 function App() {
-  const [sectors, setSectors] = useState([]);
+  const [sectors, setSectors] = useState([{ id: 1, name: "Fruits", traders: [] },
+    { id: 2, name: "Dairy", traders: [] },
+    { id: 3, name: "Fish", traders: [] },
+    { id: 4, name: "Vegetables", traders: [] },
+
+    { id: 5, name: "Meat", traders: [] }, 
+    { id: 6, name: "Household", traders: [] }, ]);
+  const [callback] = useState([]);
   const [players, setPlayers] = useState([]);
   const [product, setProduct] = useState([]);
   const [showAddTraderModal, setShowAddTraderModal] = useState(false);
@@ -31,25 +38,47 @@ function App() {
   const currentPlayer = searchParams.get("player"); // Set initial current player
   const [activeUserId, setActiveUserId] = useState(null);
   const [error, setError] = useState(null);
+  console.log('sectors', sectors)
 
   useEffect(() => {
     async function fetchData() {
-      const sectorsData = await getSectors(client);
-      const playersData = await getPlayers(client);
+      try {
+        const sectorsData = await getSectors(client) || []; // Ensure an array, even if null is returned
+        const playersData = await getPlayers(client) || []; // Ensure an array, even if null is returned
+        if (Array.isArray(sectorsData)) {
+          const sectorOrder = ["Fruits", "Dairy", "Fish", "Vegetables", "Meat", "Household", "Illegal"];
+          const myMaxValue = 6; // Use this for sectors not found in sectorOrder
 
-      setPlayers(playersData);
-      const filteredSectors = sectorsData.filter(sector => !sector.illegal);
-      setSectors(filteredSectors);
+          // Sort sectorsData based on the sectorOrder
+          sectorsData.sort((a, b) => {
+            let indexA = sectorOrder.indexOf(a.name);
+            let indexB = sectorOrder.indexOf(b.name);
 
-      setSectors(sectorsData); // Set sectors daa in state
-      const isMyTurn = await checkMyTurn(client, currentPlayer);
-      console.log('currentPlayer', currentPlayer)
-      if (isMyTurn) {
-        nextStep();
+            if (indexA === -1) indexA = myMaxValue;
+            if (indexB === -1) indexB = myMaxValue;
+
+            return indexA - indexB;
+          });
+          setSectors(sectorsData);
+        } else {
+          console.error('Fetched sectors data is not an array:', sectorsData);
+          // Handle the error appropriately
+        }
+
+        // Decide on whether you want the filtered or the unfiltered list here
+        const filteredSectors = sectorsData.filter(sector => !sector.illegal);
+        setSectors(filteredSectors); // Use either filteredSectors or sectorsData
+
+        setPlayers(playersData);
+      } catch (error) {
+        console.error("Error fetching initial data:", error);
+        // Set defaults in case of error
+        setSectors([]);
+        setPlayers([]);
       }
     }
     fetchData();
-  }, [currentPlayer]); // Add currentPlayer to the dependency array
+  }, [currentPlayer]); // Dependencies array
 
   useEffect(() => {
     async function fetchActiveUserId() {
@@ -116,7 +145,7 @@ function App() {
           console.log('filteredProductCards', filteredProductCards)
 
           // Example call to getTrader
-          await getTrader(client, currentPlayerObject.id, selectedSectorId, filteredProductCards.map(card => card.id), setError, setSectors, sectors, setProduct, product);
+          await getTrader(client, currentPlayerObject.id, selectedSectorId, filteredProductCards.map(card => card.id), setError, updateSectorsWithNewTrader, setSectors, sectors, setProduct, product, );
 
           //   await getTrader(selectedSectorId, currentPlayerObject, setError, setSectors, sectors, setProduct, product);
         }
@@ -128,6 +157,82 @@ function App() {
     }
   };
 
+
+
+
+  // function updateSectorsWithNewTrader(newTrader, sectorIdInt, sectors) {
+  //   setSectors(currentSectors => updateSectorsWithNewTrader(newTrader, sectorId, currentSectors));
+  //   console.log('updateSectorsWithNewTrader', sectors)
+  //   // Check if sectors is an array and has elements
+  //   if (Array.isArray(sectors) && sectors.length > 0) {
+  //     // Find the index of the sector that needs to be updated
+  //     const sectorIndex = sectors.findIndex(sector => sector.id === sectorIdInt);
+  //     console.log('sectors after mut', sectors)
+
+  //     // If the sector is found
+  //     if (sectorIndex !== -1) {
+  //       // Deep clone the sector to avoid direct state mutation
+  //       const updatedSector = { ...sectors[sectorIndex] };
+
+  //       // Assuming 'traders' is an array within the sector
+  //       // Add the newTrader to this array
+  //       updatedSector.traders = [...updatedSector.traders, newTrader];
+
+  //       // Now create a new array with the updated sector
+  //       const updatedSectors = sectors.map((sector, index) => {
+  //         if (index === sectorIndex) {
+  //           return updatedSector;
+  //         }
+  //         return sector;
+  //       });
+
+  //       // Return the newly updated sectors array
+  //       return updatedSectors;
+  //     } else {
+  //       // Sector not found, return the sectors unchanged
+  //       console.warn('Sector not found with id:', sectorIdInt);
+  //       return sectors;
+  //     }
+  //   } else {
+  //     // Sectors not in expected format, return them unchanged
+  //     console.error('Invalid sectors array:', sectors);
+  //     return sectors;
+  //   }
+  // }
+  // const updateSectorsWithNewTrader = (newTrader, sectorIdInt, sectors, setSectors) => {
+  //   // Clone the sectors array to avoid direct state mutation
+  //   const updatedSectors = [...sectors];
+  //   useEffect(() => {
+  //     console.log('Updated sectors:', sectors);
+  //     console.log('updatedSectors:', updatedSectors);
+  //   }, [sectors]);
+
+  //   // Find the index of the sector with the matching ID
+  //   const sectorIndex = updatedSectors.findIndex(sector => sector.id === sectorIdInt);
+
+  //   if (sectorIndex !== -1) {
+  //     // Add the newTrader's id to the traders array for the target sector
+  //     // Ensure traders array is cloned to avoid direct state mutation
+  //     const updatedTraders = [...updatedSectors[sectorIndex].traders, newTrader.id];
+
+  //     // Update the traders array for the target sector
+  //     updatedSectors[sectorIndex].traders = updatedTraders;
+  //     useEffect(() => {
+       
+  //       console.log('updatedSectors after trader added:', updatedSectors);
+  //     }, [sectors]);
+
+  //     // Update the state with the new sectors array
+  //     setSectors(updatedSectors);
+  //   } else {
+  //     console.error('Sector not found');
+  //   }
+  // };
+
+
+  useEffect(() => {
+    console.log("Updated sectors state:", sectors);
+  }, [sectors]);
 
   return (
     <ApolloProvider client={client}>
@@ -171,6 +276,7 @@ function App() {
                     currentPlayer={currentPlayer}
                     handleAddTrader={handleAddTrader}
                     handleAddProducts={handleAddProducts}
+                 //   updateSectorsWithNewTrader={updateSectorsWithNewTrader}
                   />
                 ))}
               </div>
@@ -243,6 +349,9 @@ function App() {
         sectorId={selectedSectorId}
         setError={setError}
         client={client}
+        sectors={sectors}
+        setSectors={setSectors}
+      //  updateSectorsWithNewTrader={updateSectorsWithNewTrader}
       />}
       {error && <GraphError show={true} onClose={() => setError(null)} errorMessage={error} originalError={error} />}
 
