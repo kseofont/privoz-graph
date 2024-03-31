@@ -21,7 +21,7 @@ function Sector({ sector, players, handleAddTrader, handleAddProducts, currentPl
                 <div className="">
                     <div className={`justify-content-between d-flex`}>
 
-                        {currentTradersCount > 0 && sector.traders.map(trader => (
+                        { sector.traders.map(trader => (
                             trader.player && (
                                 <div key={trader.id} className={`trader d-flex flex-column justify-content-center align-items-center gap-1 ${columnClass}`}>
 

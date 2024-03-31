@@ -84,13 +84,20 @@ function App() {
     async function fetchActiveUserId() {
       try {
         const { data } = await client.query({ query: GET_GAME_DATA });
-        //  console.log('data', data);
+          console.log('data every 3 sec', data);
+        console.log('activeUserId', activeUserId);
         setActiveUserId(data.game.queue.activePlayerId);
       } catch (error) {
         console.error('Error fetching active user id:', error);
       }
     }
     fetchActiveUserId();
+
+    // Set up the interval to call fetchActiveUserId every 3 seconds
+    const intervalId = setInterval(fetchActiveUserId, 3000);
+
+    // Return a cleanup function that clears the interval
+    return () => clearInterval(intervalId);
   }, []); // Run once on component mount
 
   const nextStep = () => {
@@ -135,8 +142,8 @@ function App() {
         const currentPlayerObject = players.find(player => player.id === currentPlayer);
         if (currentPlayerObject) {
 
-          console.log('sectors', sectors)
-          console.log('currentPlayerObject', currentPlayerObject)
+          // console.log('sectors', sectors)
+          // console.log('currentPlayerObject', currentPlayerObject)
           // Filter product cards of the currentPlayerObject that have the same sector ID as the selected sector
           const filteredProductCards = currentPlayerObject.productCards.filter(card => card.sector.id === selectedSectorId);
 
@@ -159,75 +166,6 @@ function App() {
 
 
 
-
-  // function updateSectorsWithNewTrader(newTrader, sectorIdInt, sectors) {
-  //   setSectors(currentSectors => updateSectorsWithNewTrader(newTrader, sectorId, currentSectors));
-  //   console.log('updateSectorsWithNewTrader', sectors)
-  //   // Check if sectors is an array and has elements
-  //   if (Array.isArray(sectors) && sectors.length > 0) {
-  //     // Find the index of the sector that needs to be updated
-  //     const sectorIndex = sectors.findIndex(sector => sector.id === sectorIdInt);
-  //     console.log('sectors after mut', sectors)
-
-  //     // If the sector is found
-  //     if (sectorIndex !== -1) {
-  //       // Deep clone the sector to avoid direct state mutation
-  //       const updatedSector = { ...sectors[sectorIndex] };
-
-  //       // Assuming 'traders' is an array within the sector
-  //       // Add the newTrader to this array
-  //       updatedSector.traders = [...updatedSector.traders, newTrader];
-
-  //       // Now create a new array with the updated sector
-  //       const updatedSectors = sectors.map((sector, index) => {
-  //         if (index === sectorIndex) {
-  //           return updatedSector;
-  //         }
-  //         return sector;
-  //       });
-
-  //       // Return the newly updated sectors array
-  //       return updatedSectors;
-  //     } else {
-  //       // Sector not found, return the sectors unchanged
-  //       console.warn('Sector not found with id:', sectorIdInt);
-  //       return sectors;
-  //     }
-  //   } else {
-  //     // Sectors not in expected format, return them unchanged
-  //     console.error('Invalid sectors array:', sectors);
-  //     return sectors;
-  //   }
-  // }
-  // const updateSectorsWithNewTrader = (newTrader, sectorIdInt, sectors, setSectors) => {
-  //   // Clone the sectors array to avoid direct state mutation
-  //   const updatedSectors = [...sectors];
-  //   useEffect(() => {
-  //     console.log('Updated sectors:', sectors);
-  //     console.log('updatedSectors:', updatedSectors);
-  //   }, [sectors]);
-
-  //   // Find the index of the sector with the matching ID
-  //   const sectorIndex = updatedSectors.findIndex(sector => sector.id === sectorIdInt);
-
-  //   if (sectorIndex !== -1) {
-  //     // Add the newTrader's id to the traders array for the target sector
-  //     // Ensure traders array is cloned to avoid direct state mutation
-  //     const updatedTraders = [...updatedSectors[sectorIndex].traders, newTrader.id];
-
-  //     // Update the traders array for the target sector
-  //     updatedSectors[sectorIndex].traders = updatedTraders;
-  //     useEffect(() => {
-       
-  //       console.log('updatedSectors after trader added:', updatedSectors);
-  //     }, [sectors]);
-
-  //     // Update the state with the new sectors array
-  //     setSectors(updatedSectors);
-  //   } else {
-  //     console.error('Sector not found');
-  //   }
-  // };
 
 
   useEffect(() => {

@@ -15,7 +15,7 @@ const GET_TRADER_MUTATION = gql`
 
 
 
-async function getTrader(client, playerId, sectorId, productCardsIds, setError,  sectors, setSectors) {
+async function getTrader(client, playerId, sectorId, productCardsIds, sectors, setError,   setSectors) {
   try {
     const playerIdInt = parseInt(playerId, 10); // Ensure playerId is an integer
     const sectorIdInt = parseInt(sectorId, 10); // Ensure sectorId is an integer

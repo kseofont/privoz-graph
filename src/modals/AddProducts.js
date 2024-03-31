@@ -3,7 +3,7 @@ import { Modal, Button } from 'react-bootstrap';
 import ProductCard from '../components/ProductCard';
 import getTrader from '../logic/getTrader';
 
-const AddProducts = ({ show, onHide, player, sectorId, setError, client, sectors, setSectors }) => {
+const AddProducts = ({ show, onHide, player, sectorId, setError, client, setSectors, sectors, updateSectorsWithNewTrader, callback }) => {
     const [activeCards, setActiveCards] = useState([]);
 
     const toggleActiveCard = (cardId) => {
@@ -14,18 +14,22 @@ const AddProducts = ({ show, onHide, player, sectorId, setError, client, sectors
         );
     };
 
-    console.log('Addtrader sectors', sectors)
+    const productCardsIds = activeCards
+
+
     const handleOkClick = async () => {
         try {
-            console.log('sectors handle ' , sectors)
+            console.log('sectorsin addproduct', sectors)
             await getTrader(
                 // Assuming `client` and other parameters are available in your scope
                 client,
                 player.id,
                 sectorId,
+                
+                productCardsIds,
                 activeCards,
                 setError,
-                sectors, setSectors
+                setSectors, sectors, updateSectorsWithNewTrader
                 // Ensure other parameters expected by getTrader are correctly passed
             );
             // Additional logic after successful getTrader call

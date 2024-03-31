@@ -404,7 +404,7 @@ body {
   overflow: hidden;
 }
 .scroll-row{
-  overflow-x: scroll;
+  overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
@@ -418,4 +418,6 @@ body {
     -webkit-overflow-scrolling: touch;
     /* width: 100000px; */
     max-width: fit-content;
+    gap: 15px;
+     touch-action: pan-x; /* Enables horizontal scrolling */
 }
