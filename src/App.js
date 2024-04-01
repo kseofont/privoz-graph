@@ -23,10 +23,9 @@ function App() {
     { id: 2, name: "Dairy", traders: [] },
     { id: 3, name: "Fish", traders: [] },
     { id: 4, name: "Vegetables", traders: [] },
-
     { id: 5, name: "Meat", traders: [] }, 
     { id: 6, name: "Household", traders: [] }, ]);
-  const [callback] = useState([]);
+
   const [players, setPlayers] = useState([]);
   const [product, setProduct] = useState([]);
   const [showAddTraderModal, setShowAddTraderModal] = useState(false);
@@ -39,6 +38,7 @@ function App() {
   const [activeUserId, setActiveUserId] = useState(null);
   const [error, setError] = useState(null);
   console.log('sectors', sectors)
+  console.log('activeUserId first', activeUserId)
 
   useEffect(() => {
     async function fetchData() {
@@ -83,22 +83,27 @@ function App() {
   useEffect(() => {
     async function fetchActiveUserId() {
       try {
-        const { data } = await client.query({ query: GET_GAME_DATA });
-          console.log('data every 3 sec', data);
-        console.log('activeUserId', activeUserId);
+        const { data } = await client.query({ query: GET_GAME_DATA ,
+          fetchPolicy: 'network-only'});
+        console.log('Fetched data:', data);
         setActiveUserId(data.game.queue.activePlayerId);
       } catch (error) {
         console.error('Error fetching active user id:', error);
       }
     }
-    fetchActiveUserId();
 
-    // Set up the interval to call fetchActiveUserId every 3 seconds
-    const intervalId = setInterval(fetchActiveUserId, 3000);
+    if (activeUserId === null) {
+      // If activeUserId is null, try fetching it immediately.
+      fetchActiveUserId();
+    } else {
+      // If activeUserId is already set, start the interval for periodic fetching.
+      const intervalId = setInterval(fetchActiveUserId, 3000);
 
-    // Return a cleanup function that clears the interval
-    return () => clearInterval(intervalId);
-  }, []); // Run once on component mount
+      // Cleanup on component unmount or when activeUserId changes.
+      return () => clearInterval(intervalId);
+    }
+  }, [activeUserId]); // Depend on activeUserId to restart the interval when it changes.
+  console.log('activeUserId out', activeUserId);
 
   const nextStep = () => {
     console.log('nextStep added');
