@@ -78,7 +78,7 @@ function App() {
       }
     }
     fetchData();
-  }, [currentPlayer]); // Dependencies array
+  }, [currentPlayer, sectors]); // Dependencies array
 
   useEffect(() => {
     async function fetchActiveUserId() {
