@@ -41,7 +41,7 @@ query GetSectors {
 
 async function getSectors(client) {
   try {
-    const { data } = await client.query({ query: GET_SECTOR_DATA });
+    const { data } = await client.query({ query: GET_SECTOR_DATA,  fetchPolicy: 'network-only'  });
     //  console.log('data', data);
     const sectors = data.game.sectors.filter(sector => sector.name !== 'Illegal');
     return sectors;

@@ -19,7 +19,7 @@ const AddProducts = ({ show, onHide, player, sectorId, setError, client, setSect
 
     const handleOkClick = async () => {
         try {
-            console.log('sectorsin addproduct', sectors)
+            console.log('sectors in addproduct', sectors)
             await getTrader(
                 // Assuming `client` and other parameters are available in your scope
                 client,
@@ -27,9 +27,10 @@ const AddProducts = ({ show, onHide, player, sectorId, setError, client, setSect
                 sectorId,
                 
                 productCardsIds,
-                activeCards,
+                sectors,
+               
                 setError,
-                setSectors, sectors, updateSectorsWithNewTrader
+                setSectors 
                 // Ensure other parameters expected by getTrader are correctly passed
             );
             // Additional logic after successful getTrader call
