@@ -12,6 +12,7 @@ import GraphError from './modals/GraphError';
 import { useSearchParams } from "react-router-dom";
 import getTrader from './logic/getTrader';
 import AddProducts from './modals/AddProducts'; 
+import fetchSectorsData from './logic/fetchSectorsData';
 
 export const client = new ApolloClient({
   uri: 'https://privoz.lavron.dev/graphql/',
@@ -26,7 +27,52 @@ function App() {
     { id: 5, name: "Meat", traders: [] }, 
     { id: 6, name: "Household", traders: [] }, ]);
 
-  const [players, setPlayers] = useState([]);
+  const [players, setPlayers] = useState([
+    {
+      "id": "34",
+      "traders": [],
+      "hero": {
+        "color": "#000000",
+        "id": "9",
+        "name": "Thief Benya",
+        "image": ""
+      },
+      "productCards": [
+        {
+          "id": "2611",
+          "product": {
+            "id": "7"
+          },
+          "sector": {
+            "name": "Dairy",
+            "id": 80
+          }
+        },
+      ]
+    },
+    {
+      "id": "35",
+      "traders": [],
+      "hero": {
+        "color": "#00FF00",
+        "id": "7",
+        "name": "Grigory The Gardener",
+        "image": ""
+      },
+      "productCards": [
+        {
+          "id": "2738",
+          "product": {
+            "id": "21"
+          },
+          "sector": {
+            "name": "Illegal",
+            "id": 84
+          }
+        },
+      ]
+    }
+  ]);
   const [product, setProduct] = useState([]);
   const [showAddTraderModal, setShowAddTraderModal] = useState(false);
   const [showMaxTradersModal, setShowMaxTradersModal] = useState(false);
@@ -41,44 +87,8 @@ function App() {
   console.log('activeUserId first', activeUserId)
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const sectorsData = await getSectors(client) || []; // Ensure an array, even if null is returned
-        const playersData = await getPlayers(client) || []; // Ensure an array, even if null is returned
-        if (Array.isArray(sectorsData)) {
-          const sectorOrder = ["Fruits", "Dairy", "Fish", "Vegetables", "Meat", "Household", "Illegal"];
-          const myMaxValue = 6; // Use this for sectors not found in sectorOrder
-
-          // Sort sectorsData based on the sectorOrder
-          sectorsData.sort((a, b) => {
-            let indexA = sectorOrder.indexOf(a.name);
-            let indexB = sectorOrder.indexOf(b.name);
-
-            if (indexA === -1) indexA = myMaxValue;
-            if (indexB === -1) indexB = myMaxValue;
-
-            return indexA - indexB;
-          });
-          setSectors(sectorsData);
-        } else {
-          console.error('Fetched sectors data is not an array:', sectorsData);
-          // Handle the error appropriately
-        }
-
-        // Decide on whether you want the filtered or the unfiltered list here
-        const filteredSectors = sectorsData.filter(sector => !sector.illegal);
-        setSectors(filteredSectors); // Use either filteredSectors or sectorsData
-
-        setPlayers(playersData);
-      } catch (error) {
-        console.error("Error fetching initial data:", error);
-        // Set defaults in case of error
-        setSectors([]);
-        setPlayers([]);
-      }
-    }
-    fetchData();
-  }, [currentPlayer, sectors]); // Dependencies array
+    fetchSectorsData(client, setSectors, setPlayers);
+  }, [currentPlayer]); // Dependencies array
 
   useEffect(() => {
     async function fetchActiveUserId() {
@@ -103,7 +113,7 @@ function App() {
       return () => clearInterval(intervalId);
     }
   }, [activeUserId]); // Depend on activeUserId to restart the interval when it changes.
-  console.log('activeUserId out', activeUserId);
+  console.log('activeUserId out');
 
   const nextStep = () => {
     console.log('nextStep added');
@@ -294,6 +304,7 @@ function App() {
         client={client}
         sectors={sectors}
         setSectors={setSectors}
+        setPlayers={setPlayers}
       //  updateSectorsWithNewTrader={updateSectorsWithNewTrader}
       />}
       {error && <GraphError show={true} onClose={() => setError(null)} errorMessage={error} originalError={error} />}

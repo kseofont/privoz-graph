@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client';
 import updateSectorsWithNewTrader from './updateSectorsWithNewTrader';
+import fetchSectorsData from './fetchSectorsData';
 
 // Define the GraphQL mutation
 const GET_TRADER_MUTATION = gql`
@@ -15,7 +16,7 @@ const GET_TRADER_MUTATION = gql`
 
 
 
-async function getTrader(client, playerId, sectorId, productCardsIds, sectors, setError,   setSectors) {
+async function getTrader(client, playerId, sectorId, productCardsIds, sectors, setError, setSectors, setPlayers) {
   try {
     const playerIdInt = parseInt(playerId, 10); // Ensure playerId is an integer
     const sectorIdInt = parseInt(sectorId, 10); // Ensure sectorId is an integer
@@ -41,6 +42,7 @@ async function getTrader(client, playerId, sectorId, productCardsIds, sectors, s
       console.log('newTrader after', sectorIdInt);
       console.log('newTrader sectors', sectors);
       updateSectorsWithNewTrader(newTrader, sectorIdInt, sectors, setSectors);
+      fetchSectorsData(client, setSectors, setPlayers);
     }
 
   } catch (error) {

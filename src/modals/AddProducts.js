@@ -3,7 +3,7 @@ import { Modal, Button } from 'react-bootstrap';
 import ProductCard from '../components/ProductCard';
 import getTrader from '../logic/getTrader';
 
-const AddProducts = ({ show, onHide, player, sectorId, setError, client, setSectors, sectors, updateSectorsWithNewTrader, callback }) => {
+const AddProducts = ({ show, onHide, player, sectorId, setError, client, setSectors, sectors, updateSectorsWithNewTrader, setPlayers }) => {
     const [activeCards, setActiveCards] = useState([]);
 
     const toggleActiveCard = (cardId) => {
@@ -30,7 +30,8 @@ const AddProducts = ({ show, onHide, player, sectorId, setError, client, setSect
                 sectors,
                
                 setError,
-                setSectors 
+                setSectors,
+                setPlayers
                 // Ensure other parameters expected by getTrader are correctly passed
             );
             // Additional logic after successful getTrader call
