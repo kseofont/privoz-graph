@@ -4,15 +4,15 @@ import { Modal, Button } from 'react-bootstrap';
 import Sector from './components/Sector';
 import Player from './components/Player';
 import CurrentPlayer from './components/CurrentPlayer';
-import checkMyTurn, { GET_GAME_DATA } from './logic/checkMyTurn';
-import getSectors from './logic/getSectors';
-import getPlayers from './logic/getPlayers';
+
 //import addTrader from './logic/addTrader'; // Import addTrader function
 import GraphError from './modals/GraphError';
 import { useSearchParams } from "react-router-dom";
 import getTrader from './logic/getTrader';
 import AddProducts from './modals/AddProducts'; 
 import fetchSectorsData from './logic/fetchSectorsData';
+import fetchActiveUserId from './logic/fetchActiveUserId'; // Adjust the path as necessary
+
 
 export const client = new ApolloClient({
   uri: 'https://privoz.lavron.dev/graphql/',
@@ -91,33 +91,15 @@ function App() {
   }, [currentPlayer]); // Dependencies array
 
   useEffect(() => {
-    async function fetchActiveUserId() {
-      try {
-        const { data } = await client.query({ query: GET_GAME_DATA ,
-          fetchPolicy: 'network-only'});
-        console.log('Fetched data:', data);
-        setActiveUserId(data.game.queue.activePlayerId);
-      } catch (error) {
-        console.error('Error fetching active user id:', error);
-      }
-    }
-
     if (activeUserId === null) {
-      // If activeUserId is null, try fetching it immediately.
-      fetchActiveUserId();
+      fetchActiveUserId(client, setActiveUserId);
     } else {
-      // If activeUserId is already set, start the interval for periodic fetching.
-      const intervalId = setInterval(fetchActiveUserId, 3000);
-
-      // Cleanup on component unmount or when activeUserId changes.
+      const intervalId = setInterval(() => fetchActiveUserId(client, setActiveUserId), 3000);
       return () => clearInterval(intervalId);
     }
-  }, [activeUserId]); // Depend on activeUserId to restart the interval when it changes.
-  console.log('activeUserId out');
+  }, [activeUserId]);
 
-  const nextStep = () => {
-    console.log('nextStep added');
-  };
+
 
   const handleAddTrader = (sectorId) => {
   
@@ -158,7 +140,7 @@ function App() {
         if (currentPlayerObject) {
 
           // console.log('sectors', sectors)
-          // console.log('currentPlayerObject', currentPlayerObject)
+        
           // Filter product cards of the currentPlayerObject that have the same sector ID as the selected sector
           const filteredProductCards = currentPlayerObject.productCards.filter(card => card.sector.id === selectedSectorId);
 
@@ -197,10 +179,22 @@ function App() {
               <div className="game-phase mb-2 border border-green px-3 py-2">
 
                 <div className="game-info d-flex flex-column flex-sm-row  gap-2 justify-content-between">
-                  <div className="active-user-info">
+                  <div className="active-user-info d-flex   gap-6 flex-row">
+                    <div className="players-mass-info">
                     <p>current player id = {currentPlayer}</p>
 
                     <p>active user id = {activeUserId}</p>
+                    </div>
+                    {console.log('act.pl', activeUserId)}
+                    {console.log('currentPlayer.pl', currentPlayer)}
+                    <div className={`activeturn ${currentPlayer == activeUserId ? 'active' : ''}`}>
+                      {currentPlayer == activeUserId ? (
+                        <h3>Your turn</h3>
+                      ) : (
+                        <h3>Wait for another player's turn</h3>
+                      )}
+                    </div>
+
 
                   </div>
                   <div className="game-info">

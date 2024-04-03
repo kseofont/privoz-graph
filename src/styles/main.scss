@@ -421,3 +421,16 @@ body {
     gap: 15px;
      touch-action: pan-x; /* Enables horizontal scrolling */
 }
+
+.activeturn{
+  border: 1px solid #ccc;
+      padding: 24px;
+    border-radius: 15px;
+    background: #ffd1d1;
+    &.active{
+          background: #a1eda1;
+    }
+}
+.active-user-info{
+  gap: 24px;
+}
